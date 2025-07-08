@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智眸守卫-实时监控记录</title>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100vh;
+        margin: 0;
+    }
+    h1 {
+        text-align: center;
+    }
+    div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    img {
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+    <h1>智眸守卫-实时监控记录</h1>
+    <div>
+        {% if latest_image %}
+          <img id="latestImage" src="{{ url_for('static', filename='images/' + latest_image) }}" alt="{{ latest_image }}" style="max-width: 100%; height: auto;">
+        {% endif %}
+    </div>
+
+    <script>
+        // 使用 JavaScript 定时请求最新的图片信息
+        setInterval(function() {
+            fetch('/')
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(data, 'text/html');
+                    const newImageSrc = doc.querySelector('#latestImage').getAttribute('src');
+                    document.querySelector('#latestImage').setAttribute('src', newImageSrc);
+                });
+        }, 200); // 每5秒检查一次
+    </script>
+</body>
+</html>
+

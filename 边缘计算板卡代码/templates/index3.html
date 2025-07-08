@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RTSP视频流</title>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        .video-box {
+            background: #000;
+            padding: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>实时监控画面</h1>
+        <div class="video-box">
+            <img src="{{ url_for('video_feed') }}">
+        </div>
+    </div>
+</body>
+</html>
